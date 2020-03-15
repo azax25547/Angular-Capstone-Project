@@ -1,0 +1,76 @@
+<div class="container">
+  <form [formGroup]="loginProfile" (submit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 text-center">
+        <p class="lead">
+          SIGN IN
+        </p>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+          </div>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email ID"
+            aria-label="Email ID"
+            aria-describedby="basic-addon1"
+            formControlName="loginEmail"
+            [ngClass]="{'is-invalid': isValid && f.loginEmail.errors}"
+          />
+          <div *ngIf="isValid && f.loginEmail.errors" class="invalid-feedback">
+            <div *ngIf="f.loginEmail.errors.required">Email is required</div>
+            <div *ngIf="f.loginEmail.errors.email">
+              Email must be a valid email address
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 text-center">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+          </div>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            aria-label="Password"
+            aria-describedby="basic-addon1"
+            formControlName="loginPassword"
+            [ngClass]="{'is-invalid': isValid && f.loginPassword.errors}"
+          />
+          <div
+            *ngIf="isValid && f.loginPassword.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.loginPassword.errors.required">
+              Password is required
+            </div>
+          </div>
+          <button class="btn btn-outline-primary" type="submit">
+            Log In
+          </button>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <p>
+        <a routerLink="/forgot">Forgot Password</a>
+      </p>
+      <p>
+        Go Back to <a routerLink="/register">Register</a> or
+        <a routerLink="/">home</a>
+      </p>
+    </div>
+  </div>
+</div>

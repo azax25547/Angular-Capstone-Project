@@ -1,0 +1,6 @@
+<p>{{title}} {{child}}</p>
+<div *ngIf="!products" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+<div *ngFor="let product of products">
+  <div (click)="onClickProduct(product)">{{product.product}}</div>
+  <div>{{product.quantity}}</div>
+</div>

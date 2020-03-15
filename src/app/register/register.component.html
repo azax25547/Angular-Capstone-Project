@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-8 col-xl-6">
+      <div class="row">
+        <div class="col text-center">
+          <h1>Register</h1>
+        </div>
+      </div>
+      <form [formGroup]="registerProfile" (ngSubmit)="onRegister()">
+        <div class="row align-items-center">
+          <div class="col-md-6 mt-4 form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First Name"
+              formControlName="firstName"
+              [ngClass]="{ 'is-invalid': isSubmitted && f.firstName.errors }"
+            />
+            <div
+              *ngIf="isSubmitted && f.firstName.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.firstName.errors.required">
+                First Name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mt-4 form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last Name"
+              formControlName="lastName"
+              [ngClass]="{ 'is-invalid': isSubmitted && f.lastName.errors }"
+            />
+            <div
+              *ngIf="isSubmitted && f.lastName.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.lastName.errors.required">
+                Last Name is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center mt-4 ">
+          <div class="col form-group">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Email"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': isSubmitted && f.email.errors }"
+            />
+            <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">
+                Email must be a valid email address
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center mt-4 ">
+          <div class="col form-group">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Phone Number"
+              formControlName="phone"
+              [ngClass]="{ 'is-invalid': isSubmitted && f.phone.errors }"
+            />
+            <div *ngIf="isSubmitted && f.phone.errors" class="invalid-feedback">
+              <div *ngIf="f.phone.errors.required">Phone Number required</div>
+              <div *ngIf="f.phone.errors.maxlength">
+                Must be equal to 10 digits
+              </div>
+            </div>
+          </div>
+          <div class="col form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Location"
+              formControlName="location"
+              [ngClass]="{ 'is-invalid': isSubmitted && f.location.errors }"
+            />
+            <div
+              *ngIf="isSubmitted && f.location.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.location.errors.required">Location required</div>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center mt-4">
+          <div class="col form-group">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              formControlName="password"
+              [ngClass]="{ 'is-invalid': isSubmitted && f.password.errors }"
+            />
+            <div
+              *ngIf="isSubmitted && f.password.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">
+                Password must be at least 6 characters
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center mt-4">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <input class="btn btn-secondary form-control" type="submit" />
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-12 text-center mt-2">
+            <p>
+              Already Registered? <a routerLink="/signin">Sign In</a> <br />
+              Go Back to <a routerLink="/">Home</a>
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

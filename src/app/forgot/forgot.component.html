@@ -1,0 +1,56 @@
+<div class="container">
+  <form [formGroup]="forgetProfile" (submit)="onForgotId()">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 text-center">
+        <p class="lead">
+          Forgot Password
+        </p>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+          </div>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Registered Email ID"
+            aria-label="Email ID"
+            aria-describedby="basic-addon1"
+            formControlName="loginEmail"
+          />
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 text-center">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+          </div>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            aria-label="Password"
+            aria-describedby="basic-addon1"
+            formControlName="loginPassword"
+          />
+          <button class="btn btn-outline-primary" type="submit">Log In</button>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div> -->
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <p>
+        Not yet Registered? <a routerLink="/register">Register</a> <br />
+        Back to
+        <a routerLink="/">Home</a>
+      </p>
+    </div>
+  </div>
+</div>
