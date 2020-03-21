@@ -1,6 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, Validators } from "@angular/forms";
+import { AuthService } from "../shared/auth.service";
+import { Users } from "../user.module";
 
 @Component({
   selector: "app-register",
@@ -15,11 +17,21 @@ import { FormBuilder, Validators } from "@angular/forms";
     `
   ]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   isSubmitted = false;
+  allUsers: Users[];
 
-  constructor(private _router: Router, private fb: FormBuilder) {}
+  constructor(
+    private _router: Router,
+    private fb: FormBuilder,
+    private auth: AuthService
+  ) {}
 
+  ngOnInit() {
+    this.auth.getUserDetails().subscribe(data => {
+      this.allUsers = data;
+    });
+  }
   registerProfile = this.fb.group({
     firstName: ["", Validators.required],
     lastName: ["", Validators.required],
@@ -39,6 +51,14 @@ export class RegisterComponent {
       return;
     }
 
+    const user = this.allUsers.find(
+      x => x.email === this.registerProfile.value.email
+    );
+    if (!user) {
+      this.auth.addNewUser(this.registerProfile.value).subscribe();
+    } else {
+      alert("Already Registered. Please Login");
+    }
     this._router.navigate(["/signin"]);
   }
 }

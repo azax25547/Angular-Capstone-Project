@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../shared/auth.service';
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { FormBuilder, Validators } from "@angular/forms";
+import { AuthService } from "../shared/auth.service";
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html'
+  selector: "app-signin",
+  templateUrl: "./signin.component.html"
 })
-export class SigninComponent  {
+export class SigninComponent {
   isValid = false;
   isLoggedIn = false;
 

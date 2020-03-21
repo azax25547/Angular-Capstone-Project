@@ -3,6 +3,10 @@
   position: relative;
   width: 80px;
   height: 80px;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .lds-ring div {
   box-sizing: border-box;
@@ -11,10 +15,10 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #fff;
+  border: 8px solid #333;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
+  border-color: #333 transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
@@ -32,4 +36,25 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.product-name {
+  cursor: pointer;
+}
+
+small {
+  font-size: 0.9rem;
+}
+
+body {
+  background: linear-gradient(to right, #c04848, #480048);
+  min-height: 100vh;
+}
+
+.text-gray {
+  color: #aaa;
+}
+
+.modal-hide {
+  display: none;
 }

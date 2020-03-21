@@ -1,7 +1,213 @@
-<div class="container">
-  <p>Product details</p>
-  <span class="text-muted">Product Name: </span>{{prod}} <br />
-  <span class="text-muted">Product Quantity: </span>{{product}}
-  <br /><br />
-  <a class="btn btn-light" [routerLink]="['/']">Back</a>
+<div class="container mt-4 px-2">
+  <div class="card">
+    <div class="row">
+      <aside class="col-sm-5 border-right">
+        <article class="gallery-wrap container pt-2 mt-2">
+          <div class="img-big-wrap">
+            <div>
+              <a href="#"
+                ><img
+                  class="img-fluid"
+                  src="http://placehold.it/220x350?text=Dummy+Product"
+              /></a>
+            </div>
+          </div>
+        </article>
+      </aside>
+      <aside class="col-sm-7">
+        <article class="card-body p-5">
+          <blockquote class="blockquote">
+            <h3 class="title mb-3">{{ products.product }}</h3>
+            <footer class="blockquote-footer">
+              By <cite title="Source Title">{{ products.manufacturer }}</cite>
+            </footer>
+          </blockquote>
+
+          <p class="price-detail-wrap">
+            <span class="price h3 text-warning">
+              <span class="currency">INR ₹</span
+              ><span class="num">{{ products.price }}</span>
+            </span>
+          </p>
+          <!-- price-detail-wrap .// -->
+          <dl class="item-property">
+            <dt>Description</dt>
+            <dd>
+              <p>
+                {{ products.description }}
+              </p>
+            </dd>
+          </dl>
+
+          <dl class="param param-feature">
+            <dt>quantity</dt>
+            <dd>{{ products.quantity }} out of 5 stars</dd>
+          </dl>
+          <dl class="param param-feature">
+            <dt>Stock</dt>
+            <dd>
+              <h6
+                class="lead small text-success"
+                *ngIf="products.inStock == 'true'; else outOfStock"
+              >
+                <strong>In Stock</strong>
+              </h6>
+              <ng-template #outOfStock>
+                <h6 class="lead small text-danger">
+                  <strong>Out of Stock</strong>
+                </h6>
+              </ng-template>
+            </dd>
+          </dl>
+          <hr />
+          <button
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+            data-backdrop="static"
+            data-keyboard="false"
+            (click)="updateProduct()"
+          >
+            Update Product
+          </button>
+          <a class="btn btn-primary" [routerLink]="['/']">Home</a>
+        </article>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          Update Product Details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          [attr.data-dismiss]="willHide ? 'modal' : ''"
+          (click)="alertUser()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="newProductProfile" (ngSubmit)="updateProductToDB()">
+          <div class="row align-items-center">
+            <div class="col-md-6 mt-3 form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Product Name"
+                formControlName="product"
+              />
+            </div>
+            <div class="col-md-6 mt-3 form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Manufacturer"
+                formControlName="manufacturer"
+              />
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-3 form-group">
+              <textarea
+                class="form-control"
+                rows="5"
+                placeholder="description"
+                formControlName="description"
+              ></textarea>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-md-6 mt-3 form-group">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="price"
+                formControlName="price"
+              />
+            </div>
+            <div class="col-md-6 mt-3 form-group">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="quantity"
+                formControlName="quantity"
+              />
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-2">
+              <strong>Is in Stock?</strong>
+              &nbsp;&nbsp;
+              <label for="Yes" class="radio-inline">
+                <input
+                  type="radio"
+                  name="optradio"
+                  value="true"
+                  name="inStock"
+                  formControlName="inStock"
+                  checked
+                />
+                Yes
+              </label>
+              &nbsp;
+              <label for="No" class="radio-inline">
+                <input
+                  type="radio"
+                  name="optradio"
+                  value="false"
+                  name="inStock"
+                  formControlName="inStock"
+                />
+                No
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-12 col-xs-12 mt-1">
+              <button
+                type="submit"
+                class="btn btn-secondary"
+                [disabled]="newProductProfile.invalid"
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="clearForm()"
+              >
+                Clear
+              </button>
+            </div>
+            <div class="col-md-6 col-12 col-xs-12 mt-1">
+              <button
+                type="button"
+                class="btn btn-danger"
+                #closebutton
+                data-dismiss="modal"
+                style="display: none;"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

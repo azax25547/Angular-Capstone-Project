@@ -1,6 +1,224 @@
-<p>{{title}} {{child}}</p>
-<div *ngIf="!products" class="lds-ring"><div></div><div></div><div></div><div></div></div>
-<div *ngFor="let product of products">
-  <div (click)="onClickProduct(product)">{{product.product}}</div>
-  <div>{{product.quantity}}</div>
+<p class="text-center">{{ child }}</p>
+<!--Loading Page For Data To Be Updated-->
+<div *ngIf="!products" class="lds-ring mt-5">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+<div *ngIf="chart">
+  <canvas id="canvas">{{ chart }}</canvas>
+</div>
+
+<div class="container py-5">
+  <div class="row" *ngIf="child">
+    Add a new A Product
+    <br />
+    <button
+      class="btn btn-warning"
+      data-toggle="modal"
+      data-target="#exampleModalCenter"
+      data-keyboard="false"
+    >
+      Add Product
+    </button>
+  </div>
+  <div *ngFor="let product of products" class="my-3">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <!-- List group-->
+        <ul class="list-group shadow">
+          <!-- list group item-->
+          <li class="list-group-item">
+            <!-- Custom content-->
+            <div
+              class="media align-items-lg-center flex-column flex-lg-row p-3"
+            >
+              <div class="media-body order-2 order-lg-1">
+                <h5
+                  class="mt-0 font-weight-bold mb-2 product-name"
+                  (click)="onClickProduct(product)"
+                >
+                  {{ product.product }}
+                </h5>
+                <small
+                  ><strong>{{ product.manufacturer }}</strong></small
+                >
+
+                <p class="font-italic text-muted mb-0 small">
+                  {{ product.description }}
+                </p>
+                <div
+                  class="btn-group my-2"
+                  role="group"
+                  aria-label="Basic example"
+                  *ngIf="child"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-danger"
+                    (click)="deleteProduct(product.id)"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-between mt-3"
+                >
+                  <h6 class="font-weight-bold ">₹ {{ product.price }}</h6>
+                  <h6 class="lead ">
+                    Quantity:
+                    <small>{{ product.quantity }}</small>
+                  </h6>
+                  <h6
+                    class="lead small text-success"
+                    *ngIf="product.inStock == 'true'; else outOfStock"
+                  >
+                    <strong>In Stock</strong>
+                  </h6>
+                  <ng-template #outOfStock>
+                    <h6 class="lead small text-danger">
+                      <strong>Out of Stock</strong>
+                    </h6>
+                  </ng-template>
+                </div>
+              </div>
+              <img
+                src="http://placehold.it/170x140?text=Dummy+Product"
+                alt="Generic placeholder image"
+                width="200"
+                class="ml-lg-5 order-1 order-lg-2"
+              />
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add A Product</h5>
+        <button type="button" class="close" aria-label="Close">
+          <span
+            #closeBtn
+            aria-hidden="true"
+            [attr.data-dismiss]="willHide ? 'modal' : ''"
+            (click)="alertUser()"
+            >&times;</span
+          >
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="productProfile" (ngSubmit)="addNewProduct()">
+          <div class="row align-items-center">
+            <div class="col-md-6 mt-3 form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Product Name"
+                formControlName="product"
+              />
+            </div>
+            <div class="col-md-6 mt-3 form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Manufacturer"
+                formControlName="manufacturer"
+              />
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-3 form-group">
+              <textarea
+                class="form-control"
+                rows="5"
+                placeholder="description"
+                formControlName="description"
+              ></textarea>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-md-6 mt-3 form-group">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="price"
+                formControlName="price"
+              />
+            </div>
+            <div class="col-md-6 mt-3 form-group">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Quantity"
+                formControlName="quantity"
+              />
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-2">
+              <strong>Is in Stock?</strong>
+              &nbsp;&nbsp;
+              <label for="Yes" class="radio-inline">
+                <input
+                  type="radio"
+                  name="optradio"
+                  value="true"
+                  name="inStock"
+                  formControlName="inStock"
+                  checked
+                />
+                Yes
+              </label>
+              &nbsp;
+              <label for="No" class="radio-inline">
+                <input
+                  type="radio"
+                  name="optradio"
+                  value="false"
+                  name="inStock"
+                  formControlName="inStock"
+                />
+                No
+              </label>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            [disabled]="productProfile.invalid"
+          >
+            Submit
+          </button>
+          <button type="button" class="btn btn-danger" (click)="clearForm()">
+            Clear
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            #closebutton
+            data-dismiss="modal"
+            style="display: none;"
+          >
+            Close
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
