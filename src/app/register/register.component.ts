@@ -14,6 +14,13 @@ import { Users } from "../user.module";
         -webkit-appearance: none;
         margin: 0;
       }
+
+      .form-signin {
+        width: 100%;
+        max-width: 550px;
+        padding: 15px;
+        margin: 0 auto;
+      }
     `
   ]
 })
@@ -56,6 +63,7 @@ export class RegisterComponent implements OnInit {
     );
     if (!user) {
       this.auth.addNewUser(this.registerProfile.value).subscribe();
+      this.auth.getUserDetails().subscribe();
     } else {
       alert("Already Registered. Please Login");
     }

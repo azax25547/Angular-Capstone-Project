@@ -27,7 +27,6 @@ export class HomeComponent {
     this.titleService.setTitle("Welcome To Product Management");
     this.auth.logout();
     this.currentUser = "";
-    console.log(this.currentUser);
     localStorage.removeItem("loggedIn");
   }
 }

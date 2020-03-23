@@ -1,49 +1,83 @@
 <div class="container">
-  <form [formGroup]="forgetProfile" (submit)="onForgotId()">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-8 text-center">
-        <p class="lead">
-          Forgot Password
-        </p>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">@</span>
-          </div>
-          <input
-            type="email"
-            class="form-control"
-            placeholder="Registered Email ID"
-            aria-label="Email ID"
-            aria-describedby="basic-addon1"
-            formControlName="loginEmail"
-          />
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 text-center animated fadeIn">
+      <h1 class=" py-4">
+        Forgot Password
+      </h1>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">@</span>
         </div>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Registered Email ID"
+          aria-label="Email ID"
+          aria-describedby="basic-addon1"
+          [attr.disabled]="isUser"
+          [(ngModel)]="userEmail"
+        />
+        <button
+          class="btn btn-primary"
+          type="button"
+          [disabled]="isUser"
+          (click)="onForgotId()"
+        >
+          Submit
+        </button>
       </div>
-      <div class="col-md-2"></div>
     </div>
-    <!-- <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-8 text-center">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">@</span>
-          </div>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Password"
-            aria-label="Password"
-            aria-describedby="basic-addon1"
-            formControlName="loginPassword"
-          />
-          <button class="btn btn-outline-primary" type="submit">Log In</button>
+  </div>
+
+  <div class="col-md-2"></div>
+  <div class="row animated fadeIn" *ngIf="isUser">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 text-center">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">P</span>
         </div>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          aria-label="Password"
+          aria-describedby="basic-addon1"
+          [(ngModel)]="newPW"
+          required
+        />
       </div>
-      <div class="col-md-2"></div>
-    </div> -->
-    <button class="btn btn-primary" type="submit">Submit</button>
-  </form>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+  <div class="row animated fadeIn" *ngIf="isUser">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 text-center">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">P</span>
+        </div>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Confirm Password"
+          aria-label="Confirm Password"
+          aria-describedby="basic-addon2"
+          [(ngModel)]="confirmPW"
+          required
+        />
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="changePassword()"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
   <div class="row">
     <div class="col-md-12 text-center">
       <p>

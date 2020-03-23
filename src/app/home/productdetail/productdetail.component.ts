@@ -35,6 +35,7 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     this.prod = this._route.snapshot.paramMap.get("product");
+    this.increaseViewOfTheProduct();
     this.setTitle(this.prod);
   }
 
@@ -53,8 +54,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   updateProductToDB() {
-    let prodValue = { ...this.newProductProfile.value, views: 0 };
-    console.log(prodValue);
+    const prodValue = {
+      ...this.newProductProfile.value,
+      views: this.products.views + 1
+    };
     this._productService.updateProduct(this.products.id, prodValue).subscribe();
     alert("Product Updated");
     this._productService.getProductDetail(this.products.id).subscribe(
@@ -62,6 +65,15 @@ export class ProductDetailComponent implements OnInit {
       err => console.log(err)
     );
     this.closebutton.nativeElement.click();
+  }
+
+  increaseViewOfTheProduct() {
+    this.updateProduct();
+    const prodValue = {
+      ...this.newProductProfile.value,
+      views: this.products.views + 1
+    };
+    this._productService.updateProduct(this.products.id, prodValue).subscribe();
   }
   clearForm() {
     this.newProductProfile.patchValue({

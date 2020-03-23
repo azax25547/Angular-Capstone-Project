@@ -10,20 +10,22 @@ import { SigninComponent } from "./signin/signin.component";
 import { RegisterComponent } from "./register/register.component";
 import { ForgotComponent } from "./forgot/forgot.component";
 import { AuthService } from "./shared/auth.service";
+import {AboutComponent} from './about/about.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     RegisterComponent,
-    ForgotComponent
+    ForgotComponent, AboutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

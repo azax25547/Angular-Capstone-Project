@@ -32,6 +32,12 @@ export class AuthService {
     );
   }
 
+  updateUserPassword(id, user): Observable<any> {
+    const url = `${this.url}/${id}`;
+    //@ts-ignore
+    return this._httpClient.put(url, user, httpHeaders);
+  }
+
   addNewUser(users): Observable<Users> {
     const user = this.userDetails.find(x => x.email === users.email);
     return this._httpClient.post<Users>(
@@ -40,20 +46,6 @@ export class AuthService {
       // @ts-ignore
       httpHeaders
     );
-  }
-
-  login(request: any) {
-    console.log(this.userDetails);
-    const user = this.userDetails.find(
-      x => x.email === request.email && x.password === request.password
-    );
-    if (!user) {
-      return false;
-    }
-    localStorage.setItem("currentUser", JSON.stringify(user));
-    this.currentUserSubject.next(user);
-    this.isUserLoggedIn = true;
-    return true;
   }
 
   logout() {

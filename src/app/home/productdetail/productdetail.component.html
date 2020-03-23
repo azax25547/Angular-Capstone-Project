@@ -1,11 +1,12 @@
 <div class="container mt-4 px-2">
-  <div class="card">
+  <h3 class="lead text-center">Product Detail - {{ products.product }}</h3>
+  <div class="card animated fadeIn">
     <div class="row">
       <aside class="col-sm-5 border-right">
         <article class="gallery-wrap container pt-2 mt-2">
           <div class="img-big-wrap">
             <div>
-              <a href="#"
+              <a
                 ><img
                   class="img-fluid"
                   src="http://placehold.it/220x350?text=Dummy+Product"
@@ -40,8 +41,8 @@
           </dl>
 
           <dl class="param param-feature">
-            <dt>quantity</dt>
-            <dd>{{ products.quantity }} out of 5 stars</dd>
+            <dt>Quantity</dt>
+            <dd>{{ products.quantity }}</dd>
           </dl>
           <dl class="param param-feature">
             <dt>Stock</dt>

@@ -1,4 +1,4 @@
-<p class="text-center">{{ child }}</p>
+<!--<p class="text-center">{{ child }}</p>-->
 <!--Loading Page For Data To Be Updated-->
 <div *ngIf="!products" class="lds-ring mt-5">
   <div></div>
@@ -7,26 +7,153 @@
   <div></div>
 </div>
 
-<div *ngIf="chart">
+<div class="align-items-center animated fadeIn" *ngIf="chart">
+  <h3 class="text-center">Most Viewed Products</h3>
   <canvas id="canvas">{{ chart }}</canvas>
 </div>
 
-<div class="container py-5">
-  <div class="row" *ngIf="child">
-    Add a new A Product
-    <br />
-    <button
-      class="btn btn-warning"
-      data-toggle="modal"
-      data-target="#exampleModalCenter"
-      data-keyboard="false"
-    >
-      Add Product
-    </button>
+<div class="container-fluid" *ngIf="products">
+  <div class="row">
+    <div class="col-xs-12 col-12 col-md-4">
+      <div
+        class="btn-group text-center"
+        role="group"
+        aria-label="Basic example"
+      >
+        <div class="dropdown show">
+          <a
+            class="btn btn-sm btn-secondary dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownSortLink"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Sort
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownSortLink">
+            <button class="dropdown-item" (click)="sortByViews()">
+              By Views
+            </button>
+            <button class="dropdown-item" (click)="sortByQuantity()">
+              By Quantity
+            </button>
+            <button class="dropdown-item" (click)="sortByPriceMaxToMin()">
+              By Price (Max - Min)
+            </button>
+            <button class="dropdown-item" (click)="sortByPriceMinToMax()">
+              By Price (Min - Max)
+            </button>
+            <div class="dropdown-divider"></div>
+            <button
+              class="dropdown-item "
+              [disabled]="isSorted"
+              (click)="resetSort()"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+        <div class="dropdown show">
+          <a
+            class="btn btn-sm btn-secondary dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownFilterLink"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Filter
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownFilterLink">
+            <button
+              class="dropdown-item"
+              (click)="filterQuantity()"
+              *ngIf="isFiltered.quantity; else showQ"
+            >
+              <i class="fa fa-camera"></i> Hide Quantity
+            </button>
+            <ng-template #showQ>
+              <button
+                class="dropdown-item text-primary"
+                (click)="filterQuantity()"
+              >
+                Show Quantity
+              </button>
+            </ng-template>
+            <button
+              class="dropdown-item btn "
+              (click)="filterStock()"
+              *ngIf="isFiltered.stock; else showS"
+            >
+              Hide Stock
+            </button>
+            <ng-template #showS>
+              <button
+                class="dropdown-item text-primary"
+                (click)="filterStock()"
+              >
+                Show Stock
+              </button>
+            </ng-template>
+            <button
+              class="dropdown-item btn "
+              (click)="filterCurrencyToUSD()"
+              *ngIf="isFiltered.currency == 'INR'; else currency"
+            >
+              in USD
+            </button>
+            <ng-template #currency>
+              <button
+                class="dropdown-item text-primary"
+                (click)="filterCurrencyToINR()"
+              >
+                in INR
+              </button>
+            </ng-template>
+          </div>
+        </div>
+        <div *ngIf="child">
+          <button
+            class="btn btn-sm btn-warning"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+            data-keyboard="false"
+          >
+            Add Product
+          </button>
+          <button
+            class="btn btn-sm btn-danger"
+            data-toggle="modal"
+            data-target="#deleteModal"
+            data-keyboard="false"
+          >
+            Delete Multiple
+          </button>
+        </div>
+      </div>
+
+      <input
+        type="text"
+        [(ngModel)]="productFilter"
+        class="form-control mt-1 p-2"
+        placeholder="Search for the Product"
+        style="width: 100%;"
+      />
+    </div>
+    <div class="col-xs-12  col-md-4 "></div>
+    <div class="col-xs-12 col-md-4"></div>
   </div>
-  <div *ngFor="let product of products" class="my-3">
+</div>
+
+<div class="container py-1">
+  <div *ngFor="let product of products | filter: productFilter" class="my-3">
     <div class="row">
-      <div class="col-lg-8 mx-auto">
+      <div class="col-lg-8 mx-auto  animated fadeInUp slow">
         <!-- List group-->
         <ul class="list-group shadow">
           <!-- list group item-->
@@ -66,20 +193,25 @@
                 <div
                   class="d-flex align-items-center justify-content-between mt-3"
                 >
-                  <h6 class="font-weight-bold ">₹ {{ product.price }}</h6>
-                  <h6 class="lead ">
+                  <h6 class="font-weight-bold ">
+                    <span *ngIf="isFiltered.currency == 'INR'; else usd"
+                      >₹</span
+                    >
+                    <ng-template #usd>$</ng-template> {{ product.price }}
+                  </h6>
+                  <h6 class="lead " *ngIf="isFiltered.quantity">
                     Quantity:
-                    <small>{{ product.quantity }}</small>
+                    {{ product.quantity }}
                   </h6>
                   <h6
                     class="lead small text-success"
                     *ngIf="product.inStock == 'true'; else outOfStock"
                   >
-                    <strong>In Stock</strong>
+                    <strong *ngIf="isFiltered.stock">In Stock</strong>
                   </h6>
                   <ng-template #outOfStock>
                     <h6 class="lead small text-danger">
-                      <strong>Out of Stock</strong>
+                      <strong *ngIf="isFiltered.stock">Out of Stock</strong>
                     </h6>
                   </ng-template>
                 </div>
@@ -98,7 +230,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal To Add Products-->
 <div
   class="modal fade"
   id="exampleModalCenter"
@@ -218,6 +350,56 @@
             Close
           </button>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to delete Multiple Items -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="deleteModal"
+  aria-labelledby="deleteModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Multiple Items</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-check" *ngFor="let product of products">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              (change)="onChange(product.id, $event.target.checked)"
+            />
+            <label class="form-check-label">{{ product.product }}</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="deleteMultipleProduct()"
+        >
+          Save changes
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>

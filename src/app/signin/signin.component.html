@@ -1,11 +1,15 @@
-<div class="container">
-  <form [formGroup]="loginProfile" (submit)="onSubmit()">
+<div class="container  text-center">
+  <form
+    class="form-signin animated fadeIn"
+    [formGroup]="loginProfile"
+    (submit)="onSubmit()"
+  >
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8 text-center">
-        <p class="lead">
+        <h1 class="mb-4 p-2">
           SIGN IN
-        </p>
+        </h1>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">@</span>
@@ -17,7 +21,7 @@
             aria-label="Email ID"
             aria-describedby="basic-addon1"
             formControlName="loginEmail"
-            [ngClass]="{'is-invalid': isValid && f.loginEmail.errors}"
+            [ngClass]="{ 'is-invalid': isValid && f.loginEmail.errors }"
           />
           <div *ngIf="isValid && f.loginEmail.errors" class="invalid-feedback">
             <div *ngIf="f.loginEmail.errors.required">Email is required</div>
@@ -34,7 +38,7 @@
       <div class="col-md-8 text-center">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">@</span>
+            <span class="input-group-text" id="basic-addon1">P</span>
           </div>
           <input
             type="password"
@@ -43,7 +47,7 @@
             aria-label="Password"
             aria-describedby="basic-addon1"
             formControlName="loginPassword"
-            [ngClass]="{'is-invalid': isValid && f.loginPassword.errors}"
+            [ngClass]="{ 'is-invalid': isValid && f.loginPassword.errors }"
           />
           <div
             *ngIf="isValid && f.loginPassword.errors"

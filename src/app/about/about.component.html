@@ -1,0 +1,79 @@
+<div class="aboutus-section animated zoomIn">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="aboutus">
+          <h2 class="aboutus-title">About This App</h2>
+          <p class="aboutus-text">
+            This is simply a Product Management App Which let the User to Manage
+            Product Details
+          </p>
+          <p class="aboutus-text">
+            We provide various Sorting options so that Users can view the
+            product from different necessity such as they can view the products
+            by Quantity wise or views wise. Also we use global features like
+            User form US can view the Product Prices in USD and we are working
+            on bringing more filters.
+          </p>
+          <a class="aboutus-more my-3" [routerLink]="['/']">Home</a>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <p class="aboutus-text">
+          Our search implimentation helps user to find the specific product that
+          he/she is looking for.
+        </p>
+        <p class="aboutus-text">
+          We provide the capabilities to the user to view the Products, Update
+          them and Delete them.
+        </p>
+        <p class="aboutus-text">
+          We also follow secure access that no anynomous user can Modify the
+          records and only registerd users can modify the records as their
+          requirement.
+        </p>
+        <p class="aboutus-text">
+          We also brought a new feature <strong>Chart</strong>. This chart will
+          help users to keep track in which Products are mostly viewed. We are
+          working on this feature also for making it more user reliable and
+          helpful.
+        </p>
+      </div>
+      <div class="col-md-5 col-sm-6 col-xs-12" *ngIf="currentUser; else empty">
+        <div class="feature">
+          <div class="feature-box">
+            <div class="clearfix">
+              <div class="iconset">
+                <span class="icon"></span>
+              </div>
+              <div class="feature-content">
+                <h2>User Details</h2>
+                <br />
+                <h4>Contact Details</h4>
+                <p>
+                  Name: {{ currentUser.firstName }} {{ currentUser.lastName }}
+                </p>
+                <h4>Email & Phone</h4>
+                <p>
+                  Email: {{ currentUser.email }} <br />
+                  Phone: {{ currentUser.phone }}
+                </p>
+                <h4>Belongs to</h4>
+                <p>{{ currentUser.location }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #empty>
+        <div class="col-md-5 col-sm-6 col-xs-12 text-center p-4 mt-lg-4">
+          <h4>Sign In to Explore The Full Feature of App</h4>
+          <a class="aboutus-more" [routerLink]="['/signin']">Sign In</a>
+          <hr />
+          <h4 class="lead">Not Registered Yet!!!</h4>
+          <a class="aboutus-more" [routerLink]="['/register']">Register</a>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
